@@ -1,0 +1,8 @@
+{
+  "name": "marked-wnl",
+  "description": "A markdown parser and compiler. A version that preserve new lines.",
+  "homepage": "https://github.com/shantha-kumara/meteor-marked-wnl",
+  "author": "Shantha Kumara <shantha.kumara@gmail.com>",
+  "version": "0.3.3",
+  "git": "https://github.com/shantha-kumara/meteor-marked-wnl.git"
+}
