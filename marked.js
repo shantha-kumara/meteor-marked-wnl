@@ -761,30 +761,38 @@
 	}
 
 	Renderer.prototype.code = function(code, lang, escaped) {
-		if (this.options.highlight) {
-			var out = this.options.highlight(code, lang);
-			if (out != null && out !== code) {
-				escaped = true;
-				code = out;
+		if (this.options.renderAsHTML) {
+			if (this.options.highlight) {
+				var out = this.options.highlight(code, lang);
+				if (out != null && out !== code) {
+					escaped = true;
+					code = out;
+				}
 			}
-		}
 
-		if (!lang) {
-			return '<pre ' + this.getstyle('pre') + '><code ' + this.getstyle('code', 'pre') + '>'
+			if (!lang) {
+				return '<pre ' + this.getstyle('pre') + '><code ' + this.getstyle('code', 'pre') + '>'
+					+ (escaped ? code : escape(code, true))
+					+ '\n</code></pre>';
+			}
+
+			return '<pre ' + this.getstyle('pre') + '><code ' + this.getstyle('code', 'pre') + ' class="'
+				+ this.options.langPrefix
+				+ escape(lang, true)
+				+ '">'
 				+ (escaped ? code : escape(code, true))
-				+ '\n</code></pre>';
+				+ '\n</code></pre>\n';
+		} else {
+			return escaped ? code : escape(code, true);
 		}
-
-		return '<pre ' + this.getstyle('pre') + '><code ' + this.getstyle('code', 'pre') + ' class="'
-			+ this.options.langPrefix
-			+ escape(lang, true)
-			+ '">'
-			+ (escaped ? code : escape(code, true))
-			+ '\n</code></pre>\n';
 	};
 
 	Renderer.prototype.blockquote = function(quote) {
-		return '<blockquote>\n' + quote + '</blockquote>\n';
+		if (this.options.renderAsHTML) {
+			return '<blockquote>\n' + quote + '</blockquote>\n';
+		} else {
+			return quote;
+		}
 	};
 
 	Renderer.prototype.html = function(html) {
@@ -792,6 +800,7 @@
 	};
 
 	Renderer.prototype.heading = function(text, level, raw) {
+		if (this.options.renderAsHTML) {
 		return '<h'
 			+ level
 			+ ' id="'
@@ -802,97 +811,156 @@
 			+ '</h'
 			+ level
 			+ '>\n';
+		} else {
+			return text;
+		}
 	};
 
 	Renderer.prototype.hr = function() {
-		return this.options.xhtml ? '<hr/>\n' : '<hr>\n';
+		if (this.options.renderAsHTML) {
+			return this.options.xhtml ? '<hr/>\n' : '<hr>\n';
+		} else {
+			return '\n';
+		}
 	};
 
 	Renderer.prototype.list = function(body, ordered) {
-		var type = ordered ? 'ol' : 'ul';
-		return '<' + type + '>\n' + body + '</' + type + '>\n';
+		if (this.options.renderAsHTML) {
+			var type = ordered ? 'ol' : 'ul';
+			return '<' + type + '>\n' + body + '</' + type + '>\n';
+		} else {
+			return body;
+		}
 	};
 
 	Renderer.prototype.listitem = function(text) {
-		return '<li>' + text + '</li>\n';
+		if (this.options.renderAsHTML) {
+			return '<li>' + text + '</li>\n';
+		} else {
+			return text;
+		}
 	};
 
 	Renderer.prototype.paragraph = function(text) {
-		return '<p ' + this.getstyle('p') + '>' + text + '</p>\n';
+		if (this.options.renderAsHTML) {
+			return '<p ' + this.getstyle('p') + '>' + text + '</p>\n';
+		} else {
+			return text;
+		}
 	};
 
 	Renderer.prototype.table = function(header, body) {
-		return '<table>\n'
-			+ '<thead>\n'
-			+ header
-			+ '</thead>\n'
-			+ '<tbody>\n'
-			+ body
-			+ '</tbody>\n'
-			+ '</table>\n';
+		if (this.options.renderAsHTML) {
+			return '<table>\n'
+				+ '<thead>\n'
+				+ header
+				+ '</thead>\n'
+				+ '<tbody>\n'
+				+ body
+				+ '</tbody>\n'
+				+ '</table>\n';
+		} else {
+			return header + ',' + body;
+		}
 	};
 
 	Renderer.prototype.tablerow = function(content) {
-		return '<tr>\n' + content + '</tr>\n';
+		if (this.options.renderAsHTML) {
+			return '<tr>\n' + content + '</tr>\n';
+		} else {
+			return content;
+		}
 	};
 
 	Renderer.prototype.tablecell = function(content, flags) {
-		var type = flags.header ? 'th' : 'td';
-		var tag = flags.align
-			? '<' + type + ' style="text-align:' + flags.align + '">'
-			: '<' + type + '>';
-		return tag + content + '</' + type + '>\n';
+		if (this.options.renderAsHTML) {
+			var type = flags.header ? 'th' : 'td';
+			var tag = flags.align
+				? '<' + type + ' style="text-align:' + flags.align + '">'
+				: '<' + type + '>';
+			return tag + content + '</' + type + '>\n';
+		} else {
+			return content;
+		}
 	};
 
 	// span level renderer
 	Renderer.prototype.strong = function(text) {
-		return '<strong>' + text + '</strong>';
+		if (this.options.renderAsHTML) {
+			return '<strong>' + text + '</strong>';
+		} else {
+			return text;
+		}
 	};
 
 	Renderer.prototype.em = function(text) {
-		return '<em>' + text + '</em>';
+		if (this.options.renderAsHTML) {
+			return '<em>' + text + '</em>';
+		} else {
+			return text;
+		}
 	};
 
 	Renderer.prototype.codespan = function(text) {
-		return '<code ' + this.getstyle('code') + '>' + text + '</code>';
+		if (this.options.renderAsHTML) {
+			return '<code ' + this.getstyle('code') + '>' + text + '</code>';
+		} else {
+			return text;
+		}
 	};
 
 	Renderer.prototype.br = function() {
-		return this.options.xhtml ? '<br/>' : '<br>';
+		if (this.options.renderAsHTML) {
+			return this.options.xhtml ? '<br/>' : '<br>';
+		} else {
+			return '';
+		}
 	};
 
 	Renderer.prototype.del = function(text) {
-		return '<del ' + this.getstyle('del') + '>' + text + '</del>';
+		if (this.options.renderAsHTML) {
+			return '<del ' + this.getstyle('del') + '>' + text + '</del>';
+		} else {
+			return text;
+		}
 	};
 
 	Renderer.prototype.link = function(href, title, text) {
-		if (this.options.sanitize) {
-			try {
-				var prot = decodeURIComponent(unescape(href))
-					.replace(/[^\w:]/g, '')
-					.toLowerCase();
-			} catch (e) {
-				return '';
+		if (this.options.renderAsHTML) {
+			if (this.options.sanitize) {
+				try {
+					var prot = decodeURIComponent(unescape(href))
+						.replace(/[^\w:]/g, '')
+						.toLowerCase();
+				} catch (e) {
+					return '';
+				}
+				if (prot.indexOf('javascript:') === 0) {
+					return '';
+				}
 			}
-			if (prot.indexOf('javascript:') === 0) {
-				return '';
+			var out = '<a href="' + href + '"';
+			if (title) {
+				out += ' title="' + title + '"';
 			}
+			out += '>' + text + '</a>';
+			return out;
+		} else {
+			return text;
 		}
-		var out = '<a href="' + href + '"';
-		if (title) {
-			out += ' title="' + title + '"';
-		}
-		out += '>' + text + '</a>';
-		return out;
 	};
 
 	Renderer.prototype.image = function(href, title, text) {
-		var out = '<img src="' + href + '" alt="' + text + '"';
-		if (title) {
-			out += ' title="' + title + '"';
+		if (this.options.renderAsHTML) {
+			var out = '<img src="' + href + '" alt="' + text + '"';
+			if (title) {
+				out += ' title="' + title + '"';
+			}
+			out += this.options.xhtml ? '/>' : '>';
+			return out;
+		} else {
+			return text;
 		}
-		out += this.options.xhtml ? '/>' : '>';
-		return out;
 	};
 
 	Renderer.prototype.getstyle = function(tagName, parentTagName) {
@@ -1269,6 +1337,7 @@
 		headerPrefix: '',
 		renderer: new Renderer,
 		xhtml: false,
+		renderAsHTML: true,
 		enableInlineStyles: false,
 		inlineStyles: {
 			'pre': {
@@ -1342,5 +1411,6 @@
 }).call(function() {
 	return this || (typeof window !== 'undefined' ? window : global);
 }());
+
 
 
