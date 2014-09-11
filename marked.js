@@ -684,7 +684,7 @@
 			// text
 			if (cap = this.rules.text.exec(src)) {
 				src = src.substring(cap[0].length);
-				out += escape(this.smartypants(cap[0]));
+				out += this.renderer.text(this.smartypants(cap[0]));
 				continue;
 			}
 
@@ -783,7 +783,7 @@
 				+ (escaped ? code : escape(code, true))
 				+ '\n</code></pre>\n';
 		} else {
-			return escaped ? code : escape(code, true);
+			return code;
 		}
 	};
 
@@ -958,6 +958,14 @@
 			}
 			out += this.options.xhtml ? '/>' : '>';
 			return out;
+		} else {
+			return text;
+		}
+	};
+
+	Renderer.prototype.text = function(text) {
+		if (this.options.renderAsHTML) {
+			return escape(text);
 		} else {
 			return text;
 		}
