@@ -1365,6 +1365,7 @@
 			'code': {
 				'padding': '2px 4px',
 				'color': '#d14',
+				'font-family': 'Arial, Helvetica, sans-serif',
 				'white-space': 'nowrap',
 				'background-color': '#f7f7f9',
 				'border': '1px solid #e1e1e8',
