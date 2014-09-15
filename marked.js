@@ -783,7 +783,7 @@
 				+ (escaped ? code : escape(code, true))
 				+ '\n</code></pre>\n';
 		} else {
-			return code;
+			return unescape(code);
 		}
 	};
 
@@ -791,7 +791,7 @@
 		if (this.options.renderAsHTML) {
 			return '<blockquote>\n' + quote + '</blockquote>\n';
 		} else {
-			return quote;
+			return unescape(quote);
 		}
 	};
 
@@ -812,7 +812,7 @@
 			+ level
 			+ '>\n';
 		} else {
-			return text;
+			return unescape(text);
 		}
 	};
 
@@ -829,7 +829,7 @@
 			var type = ordered ? 'ol' : 'ul';
 			return '<' + type + '>\n' + body + '</' + type + '>\n';
 		} else {
-			return body;
+			return unescape(body);
 		}
 	};
 
@@ -837,7 +837,7 @@
 		if (this.options.renderAsHTML) {
 			return '<li>' + text + '</li>\n';
 		} else {
-			return text;
+			return unescape(text);
 		}
 	};
 
@@ -845,7 +845,7 @@
 		if (this.options.renderAsHTML) {
 			return '<p ' + this.getstyle('p') + '>' + text + '</p>\n';
 		} else {
-			return text;
+			return unescape(text);
 		}
 	};
 
@@ -860,7 +860,7 @@
 				+ '</tbody>\n'
 				+ '</table>\n';
 		} else {
-			return header + ',' + body;
+			return unescape(header) + ',' + unescape(body);
 		}
 	};
 
@@ -868,7 +868,7 @@
 		if (this.options.renderAsHTML) {
 			return '<tr>\n' + content + '</tr>\n';
 		} else {
-			return content;
+			return unescape(content);
 		}
 	};
 
@@ -880,7 +880,7 @@
 				: '<' + type + '>';
 			return tag + content + '</' + type + '>\n';
 		} else {
-			return content;
+			return unescape(content);
 		}
 	};
 
@@ -889,7 +889,7 @@
 		if (this.options.renderAsHTML) {
 			return '<strong>' + text + '</strong>';
 		} else {
-			return text;
+			return unescape(text);
 		}
 	};
 
@@ -897,7 +897,7 @@
 		if (this.options.renderAsHTML) {
 			return '<em>' + text + '</em>';
 		} else {
-			return text;
+			return unescape(text);
 		}
 	};
 
@@ -905,7 +905,7 @@
 		if (this.options.renderAsHTML) {
 			return '<code ' + this.getstyle('code') + '>' + text + '</code>';
 		} else {
-			return text;
+			return unescape(text);
 		}
 	};
 
@@ -921,7 +921,7 @@
 		if (this.options.renderAsHTML) {
 			return '<del ' + this.getstyle('del') + '>' + text + '</del>';
 		} else {
-			return text;
+			return unescape(text);
 		}
 	};
 
@@ -946,7 +946,7 @@
 			out += '>' + escape(text) + '</a>';
 			return out;
 		} else {
-			return text;
+			return unescape(text);
 		}
 	};
 
@@ -959,7 +959,7 @@
 			out += this.options.xhtml ? '/>' : '>';
 			return out;
 		} else {
-			return text;
+			return unescape(text);
 		}
 	};
 
@@ -967,7 +967,7 @@
 		if (this.options.renderAsHTML) {
 			return escape(text);
 		} else {
-			return text;
+			return unescape(text);
 		}
 	};
 
