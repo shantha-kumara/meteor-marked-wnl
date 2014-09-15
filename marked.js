@@ -587,7 +587,7 @@
 						: this.mangle(cap[1]);
 					href = this.mangle('mailto:') + text;
 				} else {
-					text = escape(cap[1]);
+					text = cap[1];
 					href = text;
 				}
 				out += this.renderer.link(href, null, text);
@@ -597,7 +597,7 @@
 			// url (gfm)
 			if (!this.inLink && (cap = this.rules.url.exec(src))) {
 				src = src.substring(cap[0].length);
-				text = escape(cap[1]);
+				text = cap[1];
 				href = text;
 				out += this.renderer.link(href, null, text);
 				continue;
@@ -943,7 +943,7 @@
 			if (title) {
 				out += ' title="' + title + '"';
 			}
-			out += '>' + text + '</a>';
+			out += '>' + escape(text) + '</a>';
 			return out;
 		} else {
 			return text;
