@@ -1309,6 +1309,7 @@
 		}
 		try {
 			if (opt) opt = merge({}, marked.defaults, opt);
+			src = src || '';
 			return Parser.parse(Lexer.lex(src, opt), opt);
 		} catch (e) {
 			e.message += '\nPlease report this to https://github.com/chjj/marked.';
