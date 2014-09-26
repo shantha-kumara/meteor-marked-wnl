@@ -3,7 +3,7 @@ if (Package.templating) {
   var HTML = Package.htmljs.HTML; // implied by `ui`
   var Blaze = Package.blaze.Blaze; // implied by `ui`
 
-  Blaze.registerHelper('markdown', Blaze.Template('markdown', function () {
+  Blaze.registerHelper('markdown_wnl', Blaze.Template('markdown_wnl', function () {
     var view = this;
     var content = '';
     if (view.templateContentBlock) {
