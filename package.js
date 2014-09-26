@@ -3,7 +3,7 @@
 Package.describe({
   name: "marked-wnl",
   summary: "A markdown parser and compiler. A version that preserve new lines.",
-  version: "0.3.4",
+  version: "0.3.5",
   git: "https://github.com/shantha-kumara/meteor-marked-wnl.git"
 });
 
