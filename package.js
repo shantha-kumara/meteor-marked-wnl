@@ -1,9 +1,11 @@
 // Source: https://github.com/shantha-kumara/marked-wnl
 
 Package.describe({
-  name: "marked-wnl",
+  name: "cinergix:marked-wnl",
   summary: "A markdown parser and compiler. A version that preserve new lines.",
-  version: "0.3.5",
+  homepage: "https://github.com/shantha-kumara/meteor-marked-wnl",
+  version: "0.3.6",
+  author: "shantha Kumara",
   git: "https://github.com/shantha-kumara/meteor-marked-wnl.git"
 });
 
